@@ -1,16 +1,25 @@
 # Seen on X
 
-Find posts you saw before the X timeline refreshed.
+Find posts you saw before the X timeline refreshed.  
+找回你在 X 时间线里看见过、却因为刷新再也找不到的帖子。
 
-Seen on X solves a specific browsing problem: you refresh or navigate away from X, realize you saw something worth saving, and cannot find it again because you never opened the individual post URL.
+Seen on X is a local-first Chrome/Edge extension for keeping a searchable record of X posts that actually entered your browser viewport.
 
-This extension records only posts that visibly enter your browser viewport. It stores the author, handle, text, post URL, source URL, and seen timestamps in your browser's local IndexedDB.
+Seen on X 是一个本地优先的 Chrome/Edge 扩展，用来记录真正出现在你浏览器视口里的 X 帖子，并让你之后可以搜索找回。
 
 ![Popup showing searchable local archive](docs/assets/popup.png)
 
 ![Settings page with local retention controls](docs/assets/options.png)
 
-## Privacy model
+## English
+
+### Why
+
+Sometimes you refresh or navigate away from X right after seeing something useful. Because you never opened the individual post URL, it does not appear in browser history and can be hard to find again.
+
+Seen on X gives your timeline a small local memory. It records visible posts, stores them locally, and lets you search them later.
+
+### Privacy model
 
 - Local-first: captured posts stay in your browser storage.
 - No X API usage.
@@ -20,7 +29,7 @@ This extension records only posts that visibly enter your browser viewport. It s
 
 This project is not affiliated with X Corp.
 
-## Features
+### Features
 
 - Capture visible X timeline posts after a short viewport dwell.
 - Search by text, author, handle, or URL.
@@ -30,7 +39,35 @@ This project is not affiliated with X Corp.
 - Configure retention hours, maximum entries, and text length.
 - Export JSON or CSV.
 
-## Install from source
+## 中文
+
+### 为什么做这个
+
+有时候你在 X 上刚刷到一个有用的帖子，下一秒刷新、跳转或时间线重排，它就再也找不到了。因为你没有点进单条帖子，浏览器历史里也不会留下对应 URL。
+
+Seen on X 给你的 X 时间线加一个本地记忆。它只记录你真正看见过的帖子，保存在本机浏览器里，之后可以搜索找回。
+
+### 隐私模型
+
+- 本地优先：捕获的帖子只保存在浏览器本地存储里。
+- 不调用 X API。
+- 不自动滚动、不批量抓取、不在后台请求时间线。
+- 不做远程同步或数据分析。
+- 默认设计上不捕获私信。
+
+本项目与 X Corp. 没有从属或官方关联。
+
+### 功能
+
+- 帖子进入视口并停留一小段时间后自动记录。
+- 支持按正文、作者、handle 或 URL 搜索。
+- 支持按最近时间范围筛选。
+- 如果能识别到原帖链接，可以直接打开原帖。
+- 支持复制帖子正文。
+- 可配置保留小时数、最大记录条数和单条文本长度。
+- 支持导出 JSON 或 CSV。
+
+## Install from source / 从源码安装
 
 ```bash
 pnpm install
@@ -44,7 +81,14 @@ Then load the extension:
 3. Choose **Load unpacked**.
 4. Select the `dist` directory.
 
-## Development
+然后加载扩展：
+
+1. 打开 `chrome://extensions` 或 `edge://extensions`。
+2. 打开开发者模式。
+3. 点击 **加载已解压的扩展程序**。
+4. 选择 `dist` 目录。
+
+## Development / 开发
 
 ```bash
 pnpm test
@@ -54,9 +98,11 @@ pnpm build
 
 The extension is built with TypeScript, Vite, Manifest V3, and IndexedDB.
 
-## Current limitations
+技术栈：TypeScript、Vite、Manifest V3、IndexedDB。
 
-- First version targets Chrome and Edge.
-- DOM extraction can break if X changes its markup.
-- There is no screenshot/OCR fallback.
-- There is no cloud sync.
+## Current limitations / 当前限制
+
+- First version targets Chrome and Edge. / 第一版面向 Chrome 和 Edge。
+- DOM extraction can break if X changes its markup. / 如果 X 修改页面结构，DOM 提取逻辑可能需要更新。
+- There is no screenshot/OCR fallback. / 暂无截图或 OCR 兜底。
+- There is no cloud sync. / 暂无云同步。
