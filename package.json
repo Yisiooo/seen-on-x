@@ -1,0 +1,36 @@
+{
+  "name": "seen-on-x",
+  "version": "0.1.0",
+  "description": "Find posts you saw before the X timeline refreshed.",
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "browser-extension",
+    "chrome-extension",
+    "x",
+    "twitter",
+    "timeline",
+    "local-first",
+    "seen"
+  ],
+  "packageManager": "pnpm@11.3.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/chrome": "^0.0.306",
+    "@types/node": "^22.15.21",
+    "jsdom": "^26.1.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vitest": "^3.1.4"
+  }
+}

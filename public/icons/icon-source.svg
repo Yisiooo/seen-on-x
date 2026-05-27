@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Seen on X icon">
+  <rect width="128" height="128" rx="26" fill="#111827"/>
+  <path d="M36 45h50c10 0 18 8 18 18s-8 18-18 18H42" fill="none" stroke="#e5f2ef" stroke-width="11" stroke-linecap="round"/>
+  <path d="M47 31 31 45l16 14" fill="none" stroke="#7dd3b8" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M92 97H42c-10 0-18-8-18-18s8-18 18-18h44" fill="none" stroke="#e5f2ef" stroke-width="11" stroke-linecap="round"/>
+  <path d="M81 111 97 97 81 83" fill="none" stroke="#f6c96b" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
