@@ -52,6 +52,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "$GITHUB_REF_NAME" seen-on-x-extension.zip \
-            --title "$GITHUB_REF_NAME" \
-            --notes "Download seen-on-x-extension.zip, unzip it, then load the extracted folder as an unpacked Chrome/Edge extension."
+          NOTES="Download seen-on-x-extension.zip, unzip it, then load the extracted folder as an unpacked Chrome/Edge extension.
+
+          下载 seen-on-x-extension.zip，解压后在 Chrome/Edge 开发者模式中选择解压后的文件夹加载。"
+
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" seen-on-x-extension.zip --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" seen-on-x-extension.zip \
+              --title "$GITHUB_REF_NAME" \
+              --notes "$NOTES"
+          fi
