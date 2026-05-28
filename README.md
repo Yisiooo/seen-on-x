@@ -13,6 +13,19 @@ Seen on X 是一个本地优先的 Chrome/Edge 扩展，用来记录真正出现
 
 ## English
 
+### Install
+
+For normal use, download the prebuilt extension package from [Releases](https://github.com/Yisiooo/seen-on-x/releases).
+
+1. Download `seen-on-x-extension.zip`.
+2. Unzip it.
+3. Open `chrome://extensions` or `edge://extensions`.
+4. Enable Developer mode.
+5. Choose **Load unpacked**.
+6. Select the unzipped folder.
+
+Chrome and Edge developer mode load unpacked folders, not zip files directly. The zip is only the download package.
+
 ### Why
 
 Sometimes you refresh or navigate away from X right after seeing something useful. Because you never opened the individual post URL, it does not appear in browser history and can be hard to find again.
@@ -41,6 +54,19 @@ This project is not affiliated with X Corp.
 
 ## 中文
 
+### 安装
+
+普通用户建议直接从 [Releases](https://github.com/Yisiooo/seen-on-x/releases) 下载已经打包好的扩展。
+
+1. 下载 `seen-on-x-extension.zip`。
+2. 解压这个 zip。
+3. 打开 `chrome://extensions` 或 `edge://extensions`。
+4. 打开开发者模式。
+5. 点击 **加载已解压的扩展程序**。
+6. 选择解压后的文件夹。
+
+Chrome 和 Edge 的开发者模式加载的是文件夹，不是直接加载 zip。zip 只是方便下载和发布的压缩包。
+
 ### 为什么做这个
 
 有时候你在 X 上刚刷到一个有用的帖子，下一秒刷新、跳转或时间线重排，它就再也找不到了。因为你没有点进单条帖子，浏览器历史里也不会留下对应 URL。
@@ -67,26 +93,16 @@ Seen on X 给你的 X 时间线加一个本地记忆。它只记录你真正看�
 - 可配置保留小时数、最大记录条数和单条文本长度。
 - 支持导出 JSON 或 CSV。
 
-## Install from source / 从源码安装
+## Build from source / 从源码构建
 
 ```bash
 pnpm install
 pnpm build
 ```
 
-Then load the extension:
+Then load the `dist` directory as an unpacked extension.
 
-1. Open `chrome://extensions` or `edge://extensions`.
-2. Enable Developer mode.
-3. Choose **Load unpacked**.
-4. Select the `dist` directory.
-
-然后加载扩展：
-
-1. 打开 `chrome://extensions` 或 `edge://extensions`。
-2. 打开开发者模式。
-3. 点击 **加载已解压的扩展程序**。
-4. 选择 `dist` 目录。
+然后把 `dist` 目录作为已解压扩展加载。
 
 ## Development / 开发
 
