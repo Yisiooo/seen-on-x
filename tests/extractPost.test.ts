@@ -64,4 +64,29 @@ describe("extractPostFromArticle", () => {
     expect(first?.key).toBe(second?.key);
     expect(first?.key.startsWith("hash:")).toBe(true);
   });
+
+  it("extracts post media image URLs", () => {
+    document.body.innerHTML = `
+      <article data-testid="tweet">
+        <div data-testid="User-Name">
+          <span>Image User</span>
+          <span>@images</span>
+          <a href="/images/status/42"></a>
+        </div>
+        <div data-testid="tweetText">Look at this image</div>
+        <img alt="Image" src="https://pbs.twimg.com/media/abc123?format=jpg&name=small" />
+        <img alt="Image" src="https://pbs.twimg.com/media/abc123?format=jpg&name=small" />
+        <img alt="Avatar" src="https://pbs.twimg.com/profile_images/avatar.jpg" />
+      </article>
+    `;
+
+    const article = document.querySelector("article") as HTMLElement;
+    const post = extractPostFromArticle(article, {
+      pageUrl: "https://x.com/home",
+      now: 1_779_790_000_000,
+      maxTextLength: 2_000
+    });
+
+    expect(post?.imageUrls).toEqual(["https://pbs.twimg.com/media/abc123?format=jpg&name=large"]);
+  });
 });

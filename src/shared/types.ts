@@ -4,6 +4,7 @@ export type CapturedPost = {
   authorName?: string;
   handle?: string;
   text: string;
+  imageUrls?: string[];
   postUrl?: string;
   sourceUrl: string;
   firstSeenAt: number;
@@ -30,6 +31,7 @@ export type RuntimeMessage =
   | { type: "settings:get" }
   | { type: "settings:update"; settings: Partial<LoggerSettings> }
   | { type: "posts:save"; post: CapturedPost }
+  | { type: "obsidian:savePost"; post: CapturedPost }
   | { type: "posts:query"; query?: QueryPostsRequest }
   | { type: "posts:clear" }
   | { type: "posts:stats" };

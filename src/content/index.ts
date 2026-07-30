@@ -1,4 +1,5 @@
 import { extractPostFromArticle } from "./extract";
+import { installObsidianSaveButton, setObsidianButtonState } from "./obsidianButton";
 import type { CapturedPost, LoggerSettings, RuntimeMessage, RuntimeResponse } from "../shared/types";
 
 const VISIBLE_DELAY_MS = 300;
@@ -50,6 +51,7 @@ function observeArticles(root: Node, observer: IntersectionObserver): void {
   for (const article of articles) {
     if (observedArticles.has(article)) continue;
     observedArticles.add(article);
+    installObsidianSaveButton(article as HTMLElement, () => saveArticleToObsidian(article as HTMLElement));
     observer.observe(article);
   }
 }
@@ -92,6 +94,28 @@ function captureArticle(article: HTMLElement): void {
   sendMessage<{ saved: boolean; post?: CapturedPost }>({ type: "posts:save", post }).catch(() => {
     capturedElements.delete(article);
   });
+}
+
+function saveArticleToObsidian(article: HTMLElement): void {
+  const post = extractPostFromArticle(article, {
+    pageUrl: location.href,
+    now: Date.now(),
+    maxTextLength: settings.maxTextLength
+  });
+  if (!post) {
+    setObsidianButtonState(article, "error");
+    return;
+  }
+
+  setObsidianButtonState(article, "saving");
+  sendMessage({ type: "obsidian:savePost", post })
+    .then(() => {
+      setObsidianButtonState(article, "saved");
+    })
+    .catch((error: unknown) => {
+      const message = error instanceof Error ? error.message : "Unknown error";
+      setObsidianButtonState(article, "error", message);
+    });
 }
 
 function isElementVisible(element: Element): boolean {

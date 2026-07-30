@@ -45,6 +45,7 @@ This project is not affiliated with X Corp.
 ### Features
 
 - Capture visible X timeline posts after a short viewport dwell.
+- Save a specific X post to Obsidian with an inline button when the local Obsidian backend is running.
 - Search by text, author, handle, or URL.
 - Filter by recent time window.
 - Open original posts when a status URL is available.
@@ -86,6 +87,7 @@ Seen on X 给你的 X 时间线加一个本地记忆。它只记录你真正看�
 ### 功能
 
 - 帖子进入视口并停留一小段时间后自动记录。
+- 在本机 Obsidian 后端运行时，可以点击帖子里的按钮把单条 X 内容保存到 Obsidian。
 - 支持按正文、作者、handle 或 URL 搜索。
 - 支持按最近时间范围筛选。
 - 如果能识别到原帖链接，可以直接打开原帖。
@@ -115,6 +117,30 @@ pnpm build
 The extension is built with TypeScript, Vite, Manifest V3, and IndexedDB.
 
 技术栈：TypeScript、Vite、Manifest V3、IndexedDB。
+
+## Obsidian integration / Obsidian 集成
+
+The inline Obsidian button first tries the silent Obsidian plugin capture endpoint:
+
+```text
+http://127.0.0.1:8766/x-post
+```
+
+Keep Obsidian open with the `Vault Vector Search` plugin enabled. The Obsidian plugin writes directly to the vault, so saving does not need a new browser tab or an `Open Obsidian` prompt.
+
+If the Obsidian plugin endpoint is unavailable, the extension falls back to `obsidian://new`, which may open a browser tab and ask for confirmation.
+
+Saved posts include text plus remote X image embeds when the post contains media. They are written to `04_X/` in the Obsidian vault.
+
+For vector search indexing, keep the Python backend running or trigger reindex from Obsidian:
+
+```bash
+cd /path/to/vault4ob-search
+source .venv/bin/activate
+vault-search serve --vault /path/to/your-vault --index data/vault-index --port 8765
+```
+
+内联 Obsidian 按钮会优先把当前 X 帖子发送到本机 `http://127.0.0.1:8766/x-post`，由 Obsidian 插件直接静默写入 vault，不需要新开浏览器标签或弹出打开 Obsidian 的确认。如果该接口不可用，才会退回到 `obsidian://new`。保存内容包含正文和 X 图片远程嵌入链接，文件会写入 Obsidian vault 的 `04_X/` 目录。
 
 ## Current limitations / 当前限制
 

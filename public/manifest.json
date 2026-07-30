@@ -20,8 +20,7 @@
   },
   "options_page": "options.html",
   "permissions": ["storage"],
-  "optional_permissions": ["unlimitedStorage"],
-  "host_permissions": ["https://x.com/*", "https://twitter.com/*"],
+  "host_permissions": ["https://x.com/*", "https://twitter.com/*", "http://127.0.0.1/*", "http://localhost/*"],
   "background": {
     "service_worker": "background.js",
     "type": "module"

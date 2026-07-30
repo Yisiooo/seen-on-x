@@ -14,6 +14,7 @@ export function extractPostFromArticle(article: HTMLElement, options: ExtractOpt
   const statusId = postUrl ? extractStatusId(postUrl) : undefined;
   const handle = extractHandle(article);
   const authorName = extractAuthorName(article, handle);
+  const imageUrls = extractImageUrls(article);
   const key = statusId ? `status:${statusId}` : `hash:${hashString(`${handle ?? ""}|${text}|${timeBucket(options.now)}`)}`;
 
   return {
@@ -22,12 +23,41 @@ export function extractPostFromArticle(article: HTMLElement, options: ExtractOpt
     authorName,
     handle,
     text,
+    ...(imageUrls.length ? { imageUrls } : {}),
     postUrl,
     sourceUrl: options.pageUrl,
     firstSeenAt: options.now,
     lastSeenAt: options.now,
     seenCount: 1
   };
+}
+
+function extractImageUrls(article: HTMLElement): string[] {
+  const urls = Array.from(article.querySelectorAll<HTMLImageElement>("img"))
+    .map((image) => normalizeImageUrl(image.getAttribute("src") ?? ""))
+    .filter((url): url is string => Boolean(url));
+
+  return Array.from(new Set(urls));
+}
+
+function normalizeImageUrl(src: string): string | undefined {
+  if (!src) return undefined;
+
+  let url: URL;
+  try {
+    url = new URL(src, "https://x.com");
+  } catch {
+    return undefined;
+  }
+
+  if (url.hostname !== "pbs.twimg.com") return undefined;
+  if (!url.pathname.startsWith("/media/") && !url.pathname.startsWith("/ext_tw_video_thumb/")) return undefined;
+  if (url.pathname.startsWith("/profile_images/")) return undefined;
+
+  if (url.searchParams.has("name")) {
+    url.searchParams.set("name", "large");
+  }
+  return url.href;
 }
 
 function extractTweetText(article: HTMLElement): string {

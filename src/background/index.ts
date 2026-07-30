@@ -1,6 +1,7 @@
 import { cleanupPosts, clearPosts, getPostCount, queryPosts, saveCapturedPost } from "../shared/db";
 import { getSettings, updateSettings } from "../shared/settings";
 import type { RuntimeMessage, RuntimeResponse } from "../shared/types";
+import { savePostToObsidian } from "./obsidian";
 
 chrome.runtime.onInstalled.addListener(() => {
   getSettings().then(cleanupPosts).catch(console.error);
@@ -32,6 +33,8 @@ async function handleMessage(message: RuntimeMessage): Promise<unknown> {
       const post = await saveCapturedPost(message.post, settings);
       return { saved: true, post };
     }
+    case "obsidian:savePost":
+      return savePostToObsidian(message.post);
     case "posts:query":
       return queryPosts(message.query);
     case "posts:clear":
